@@ -69,28 +69,42 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    float vertices[] = {
+    float triangle1Vertices[] = {
         -1.0f, -0.5f, 0.0f,
          0.0f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f,
-         0.0f, -0.5f, 0.0f,
-         1.0f, -0.5f, 0.0f,
-         0.5f,  0.5f, 0.0f
+        -0.5f,  0.5f, 0.0f
     };
 
-    unsigned int VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glBindVertexArray(VAO);
+    float triangle2Vertices[] = {
+        0.0f, -0.5f, 0.0f,
+        1.0f, -0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f
+    };
+
+    unsigned int triangle1VBO, triangle1VAO;
+    unsigned int triangle2VBO, triangle2VAO;
+    glGenVertexArrays(1, &triangle1VAO);
+    glGenBuffers(1, &triangle1VBO);
+    glBindVertexArray(triangle1VAO);
     
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, triangle1VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle1Vertices), triangle1Vertices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    glGenVertexArrays(1, &triangle2VAO);
+    glGenBuffers(1, &triangle2VBO);
+    glBindVertexArray(triangle2VAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, triangle2VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle2Vertices), triangle2Vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
     //Draw shape as a wireframe instead of a solid
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -103,16 +117,22 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(triangle1VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glBindVertexArray(0);
+
+        glBindVertexArray(triangle2VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &triangle1VAO);
+    glDeleteVertexArrays(2, &triangle2VAO);
+    glDeleteBuffers(1, &triangle1VBO);
+    glDeleteBuffers(1, &triangle2VBO);
 
     glfwTerminate();
     return 0;
