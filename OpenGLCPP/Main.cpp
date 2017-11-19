@@ -14,6 +14,8 @@ void checkForLinkErrors(unsigned int program);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+float IMAGE_BLEND = 0.2;
+
 int main()
 {
     glfwInit();
@@ -132,6 +134,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         ourShader.use();
+        ourShader.setFloat("mixAmmount", IMAGE_BLEND);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
@@ -153,6 +156,16 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(window, true);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+        IMAGE_BLEND += 0.1;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+        IMAGE_BLEND -= 0.1;
     }
 }
 
