@@ -70,37 +70,45 @@ int main()
     glDeleteShader(fragmentShader);
 
     float triangle1Vertices[] = {
-        -1.0f, -0.5f, 0.0f,
-         0.0f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f
+        -1.0f, -1.0f, 0.0f,
+         0.0f, -1.0f, 0.0f,
+        -0.5f,  0.0f, 0.0f
     };
 
     float triangle2Vertices[] = {
-        0.0f, -0.5f, 0.0f,
-        1.0f, -0.5f, 0.0f,
-        0.5f,  0.5f, 0.0f
+        0.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        0.5f,  0.0f, 0.0f
     };
 
-    unsigned int VBO[2];
-    unsigned int VAO[2];
+    float triangle3Vertices[] = {
+        -0.5f, 0.0f, 0.0f,
+         0.5f, 0.0f, 0.0f,
+         0.0f, 1.0f, 0.0f
+    };
 
-    glGenVertexArrays(2, VAO);
-    glGenBuffers(2, VBO);
+    unsigned int VBO[3];
+    unsigned int VAO[3];
+
+    glGenVertexArrays(3, VAO);
+    glGenBuffers(3, VBO);
 
     glBindVertexArray(VAO[0]);
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(triangle1Vertices), triangle1Vertices, GL_STATIC_DRAW);
-
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
 
     glBindVertexArray(VAO[1]);
     glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(triangle2Vertices), triangle2Vertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
+    glBindVertexArray(VAO[2]);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle3Vertices), triangle3Vertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
