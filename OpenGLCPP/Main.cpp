@@ -1,5 +1,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Shader.h"
 #include "stb_image.h"
 
@@ -115,6 +120,13 @@ int main()
     ourShader.use();
     glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
     ourShader.setInt("texture2", 1);
+
+    glm::mat4 trans;
+    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+
+    unsigned int transfomLoc = glGetUniformLocation(ourShader.ID, "transform");
+    glUniformMatrix4fv(transfomLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
     //Draw shape as a wireframe instead of a solid
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

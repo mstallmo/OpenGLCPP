@@ -73,7 +73,7 @@
     <LibraryPath>D:\GLFW\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\GLAD\include;D:\GLFW\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\GLAD\include;D:\GLFW\include;D:\glm;$(IncludePath)</IncludePath>
     <LibraryPath>D:\GLFW\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
