@@ -31,6 +31,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+bool rotateLight = false;
 
 int main()
 {
@@ -139,10 +140,13 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        float radius = 5.0f;
-        float lampX = sin(glfwGetTime()) * radius;
-        float lampZ = cos(glfwGetTime()) * radius;
-        lightPos = glm::vec3(lampX, lightPos.y, lampZ);
+        if (rotateLight)
+        {
+            float radius = 5.0f;
+            float lampX = sin(glfwGetTime()) * radius;
+            float lampZ = cos(glfwGetTime()) * radius;
+            lightPos = glm::vec3(lampX, lightPos.y, lampZ);
+        }
 
         processInput(window);
 
@@ -153,6 +157,13 @@ int main()
         lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
         lightingShader.setVec3("lightPos", lightPos);
+        lightingShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        lightingShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+        lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        lightingShader.setFloat("material.shininess", 32.0f);
+        lightingShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+        lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+        lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         lightingShader.setMat4("projection", projection);
